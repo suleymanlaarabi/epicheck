@@ -2,3 +2,4 @@
 main.c
 epicheck
 coding-style-reports.log
+Makefile

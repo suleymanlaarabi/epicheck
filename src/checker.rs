@@ -23,14 +23,11 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
     let content =
         read_to_string(&file_path).expect(&format!("Unable to read the file: {}", &file_path));
     let mut line_count = 1;
-    let all_f4 = check_f4(&content);
-    for f4 in all_f4 {
-        errors.push(CodingStyleError {
-            name: "C-F4".to_string(),
-            line: f4,
-        });
-    }
+
+    let mut f4_checker = F4Checker::default();
+
     for line in content.lines() {
+        check_all_f4(&mut f4_checker, line);
         if let Some(name) = check_l2(line) {
             errors.push(CodingStyleError {
                 name,
@@ -56,6 +53,12 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
             });
         }
         line_count += 1;
+    }
+    for f4 in f4_checker.all_f4 {
+        errors.push(CodingStyleError {
+            name: "C-F4".to_string(),
+            line: f4,
+        });
     }
     FileCodingStyleReport { file_path, errors }
 }
