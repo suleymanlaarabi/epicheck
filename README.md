@@ -20,3 +20,11 @@ git clone git@github.com:suleymanlaarabi/epicheck.git
 ```sh
 epicheck -h
 ```
+
+---
+
+## 📜 Error handled
+- F4
+- G7
+- L2
+---
