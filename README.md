@@ -1,6 +1,6 @@
 # 🚀 EpiCheck – Fast Coding Style Checker
 
-**EpiZed** Epitech Coding Style Check: Work in parallel, Fast File and error checking
+**EpiCheck** Epitech Coding Style Check: Work in parallel, Fast File and error checking
 
 ## 🌟 Features
 - ✅ **Work In Parallel**
