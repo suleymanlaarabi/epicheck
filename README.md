@@ -17,7 +17,7 @@ git clone git@github.com:suleymanlaarabi/epicheck.git
 
 ---
 
-## ⚡ How To Use
+## ⚡ Usage
 ### 1️⃣ **Print Help**
 ```sh
 epicheck -h
@@ -29,4 +29,5 @@ epicheck -h
 - F4
 - G7
 - L2
+- F3
 ---
