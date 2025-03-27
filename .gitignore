@@ -3,3 +3,4 @@ main.c
 epicheck
 coding-style-reports.log
 Makefile
+a.out
