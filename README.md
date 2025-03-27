@@ -8,6 +8,8 @@
 ---
 
 ## 📦 Installation
+### Dependencies
+- **Rust** - https://rustup.rs/
 ```sh
 git clone git@github.com:suleymanlaarabi/epicheck.git
 ./install.sh
