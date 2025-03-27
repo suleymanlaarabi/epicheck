@@ -12,3 +12,11 @@
 git clone git@github.com:suleymanlaarabi/epicheck.git
 ./install.sh
 ```
+
+---
+
+## ⚡ How To Use
+### 1️⃣ **Print Help**
+```sh
+epicheck -h
+```
