@@ -4,3 +4,4 @@ epicheck
 coding-style-reports.log
 Makefile
 a.out
+./allowlist.txt

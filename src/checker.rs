@@ -40,6 +40,12 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
                 line: line_count,
             });
         }
+        if let Some(name) = check_l3(line) {
+            errors.push(CodingStyleError {
+                name,
+                line: line_count,
+            });
+        }
         if let Some(name) = check_l2(line) {
             errors.push(CodingStyleError {
                 name,
