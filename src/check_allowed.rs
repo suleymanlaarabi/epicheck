@@ -24,6 +24,9 @@ pub fn check_libc_usage(allowed_funcs: &Vec<String>, binary_path: &str) {
         "__cxa_finalize",
         "__environ",
         "__stack_chk_fail",
+        "stdin",
+        "stdout",
+        "environ",
     ];
     allowed.extend(always_allowed.iter().map(|s| s.to_string()));
 
