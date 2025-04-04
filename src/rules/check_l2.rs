@@ -1,4 +1,6 @@
-pub fn check_l2(line: &str) -> Option<String> {
+use super::c_error::C_L2;
+
+pub fn check_l2(line: &str) -> Option<&'static str> {
     let mut count = 0;
     for c in line.chars() {
         if c == ' ' {
@@ -8,7 +10,7 @@ pub fn check_l2(line: &str) -> Option<String> {
         }
     }
     if count != 0 && count % 4 != 0 {
-        return Some("C-L2".to_string());
+        return Some(C_L2);
     }
     return None;
 }

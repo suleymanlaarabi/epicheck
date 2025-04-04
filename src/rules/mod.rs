@@ -1,3 +1,5 @@
+pub mod c_error;
+
 mod check_f3;
 mod check_f4;
 mod check_f6;

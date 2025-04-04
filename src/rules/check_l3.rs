@@ -1,4 +1,6 @@
-pub fn check_l3(line: &str) -> Option<String> {
+use super::c_error::C_L3;
+
+pub fn check_l3(line: &str) -> Option<&'static str> {
     let trimmed = line.trim();
     let mut count = 0;
 
@@ -13,7 +15,7 @@ pub fn check_l3(line: &str) -> Option<String> {
             count = 0;
         }
         if count > 1 {
-            return Some("C-L3".to_string());
+            return Some(C_L3);
         }
     }
 

@@ -1,9 +1,9 @@
 use std::fs::read_to_string;
 
-use crate::rules::*;
+use crate::rules::{c_error::C_F4, *};
 
 pub struct CodingStyleError {
-    pub name: String,
+    pub name: &'static str,
     pub line: usize,
 }
 
@@ -18,7 +18,7 @@ pub struct FileCodingStyleReport {
     pub errors: Vec<CodingStyleError>,
 }
 
-type Func = fn(&str) -> Option<String>;
+type Func = fn(&str) -> Option<&'static str>;
 
 const FUNCS: [Func; 5] = [check_f6, check_f3, check_g7, check_l3, check_l2];
 
@@ -43,7 +43,7 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
     }
     for f4 in f4_checker.all_f4 {
         errors.push(CodingStyleError {
-            name: "C-F4".to_string(),
+            name: C_F4,
             line: f4,
         });
     }
