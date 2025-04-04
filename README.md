@@ -30,4 +30,6 @@ epicheck -h
 - G7
 - L2
 - F3
+- F6
+- L6
 ---
