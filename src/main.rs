@@ -9,9 +9,11 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use read_allowed::allowlist_as_str_slice;
 
 mod args;
+mod c_parsing;
 mod check_allowed;
 mod checker;
 mod collect_files;
+mod parser;
 mod read_allowed;
 mod rules;
 

@@ -18,45 +18,26 @@ pub struct FileCodingStyleReport {
     pub errors: Vec<CodingStyleError>,
 }
 
+type Func = fn(&str) -> Option<String>;
+
+const FUNCS: [Func; 5] = [check_f6, check_f3, check_g7, check_l3, check_l2];
+
 pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport {
     let mut errors: Vec<CodingStyleError> = Vec::new();
     let content =
         read_to_string(&file_path).expect(&format!("Unable to read the file: {}", &file_path));
     let mut line_count = 1;
-
     let mut f4_checker = F4Checker::default();
 
     for line in content.lines() {
         check_all_f4(&mut f4_checker, line);
-        if let Some(name) = check_l2(line) {
-            errors.push(CodingStyleError {
-                name,
-                line: line_count,
-            });
-        }
-        if let Some(name) = check_f3(line) {
-            errors.push(CodingStyleError {
-                name,
-                line: line_count,
-            });
-        }
-        if let Some(name) = check_l3(line) {
-            errors.push(CodingStyleError {
-                name,
-                line: line_count,
-            });
-        }
-        if let Some(name) = check_l2(line) {
-            errors.push(CodingStyleError {
-                name,
-                line: line_count,
-            });
-        }
-        if let Some(name) = check_g7(line) {
-            errors.push(CodingStyleError {
-                name,
-                line: line_count,
-            });
+        for func in FUNCS {
+            if let Some(name) = func(line) {
+                errors.push(CodingStyleError {
+                    name,
+                    line: line_count,
+                });
+            }
         }
         line_count += 1;
     }
