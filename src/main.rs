@@ -31,6 +31,7 @@ fn main() {
     collect_c_files(args.dirs)
         .par_iter()
         .for_each(|file| print_file_error(file.clone()));
+
     for th in threads {
         let _ = th.join();
     }

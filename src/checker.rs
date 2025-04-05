@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{fs::read_to_string, process::exit};
 
 use crate::rules::{c_error::C_F4, *};
 
@@ -20,12 +20,18 @@ pub struct FileCodingStyleReport {
 
 type Func = fn(&str) -> Option<&'static str>;
 
-const FUNCS: [Func; 5] = [check_f6, check_f3, check_g7, check_l3, check_l2];
+const FUNCS: [Func; 6] = [check_l6, check_f6, check_f3, check_g7, check_l3, check_l2];
 
 pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport {
     let mut errors: Vec<CodingStyleError> = Vec::new();
-    let content =
-        read_to_string(&file_path).expect(&format!("Unable to read the file: {}", &file_path));
+    let content = match read_to_string(&file_path) {
+        Ok(content) => content,
+        Err(_) => {
+            println!("Invalide C file: {}", file_path);
+            exit(1);
+        }
+    };
+
     let mut line_count = 1;
     let mut f4_checker = F4Checker::default();
 
