@@ -36,6 +36,7 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
     let mut f4_checker = F4Checker::default();
 
     for line in content.lines() {
+        line_count += 1;
         if line.starts_with("/") || line.starts_with("**") {
             continue;
         }
@@ -44,11 +45,10 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
             if let Some(name) = func(line) {
                 errors.push(CodingStyleError {
                     name,
-                    line: line_count,
+                    line: line_count - 1,
                 });
             }
         }
-        line_count += 1;
     }
     for f4 in f4_checker.all_f4 {
         errors.push(CodingStyleError {
