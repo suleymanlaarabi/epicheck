@@ -36,6 +36,9 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
     let mut f4_checker = F4Checker::default();
 
     for line in content.lines() {
+        if line.starts_with("/") || line.starts_with("**") {
+            continue;
+        }
         check_all_f4(&mut f4_checker, line);
         for func in FUNCS {
             if let Some(name) = func(line) {
