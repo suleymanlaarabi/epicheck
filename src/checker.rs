@@ -22,6 +22,12 @@ type Func = fn(&str) -> Option<&'static str>;
 
 const FUNCS: [Func; 6] = [check_l6, check_f6, check_f3, check_g7, check_l3, check_l2];
 
+pub fn push_error_if(func: Func, content: &str, line: usize, errors: &mut Vec<CodingStyleError>) {
+    if let Some(name) = func(content) {
+        errors.push(CodingStyleError { name, line });
+    }
+}
+
 pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport {
     let mut errors: Vec<CodingStyleError> = Vec::new();
     let content = match read_to_string(&file_path) {
@@ -35,6 +41,7 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
     let mut line_count = 1;
     let mut f4_checker = F4Checker::default();
 
+    push_error_if(check_g1, &content, 1, &mut errors);
     for line in content.lines() {
         line_count += 1;
         if line.starts_with("/") || line.starts_with("**") {
@@ -42,12 +49,7 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
         }
         check_all_f4(&mut f4_checker, line);
         for func in FUNCS {
-            if let Some(name) = func(line) {
-                errors.push(CodingStyleError {
-                    name,
-                    line: line_count - 1,
-                });
-            }
+            push_error_if(func, line, line_count, &mut errors);
         }
     }
     for f4 in f4_checker.all_f4 {
