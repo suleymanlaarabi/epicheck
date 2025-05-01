@@ -154,6 +154,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "ignore",
+ "paparse",
  "rayon",
 ]
 
@@ -215,6 +216,10 @@ name = "once_cell"
 version = "1.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2806eaa3524762875e21c3dcd057bc4b7bfa01ce4da8d46be1cd43649e1cc6b"
+
+[[package]]
+name = "paparse"
+version = "0.1.0"
 
 [[package]]
 name = "proc-macro2"
