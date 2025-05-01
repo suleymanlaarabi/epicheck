@@ -1,6 +1,9 @@
 use std::{fs::read_to_string, process::exit};
 
-use crate::rules::{c_error::C_F4, *};
+pub mod checker_ctx;
+
+mod rules;
+use rules::{c_error::C_F4, *};
 
 pub struct CodingStyleError {
     pub name: &'static str,
@@ -22,10 +25,17 @@ type Func = fn(&str) -> Option<&'static str>;
 
 const FUNCS: [Func; 6] = [check_l6, check_f6, check_f3, check_g7, check_l3, check_l2];
 
-pub fn push_error_if(func: Func, content: &str, line: usize, errors: &mut Vec<CodingStyleError>) {
+pub fn push_error_if(
+    func: Func,
+    content: &str,
+    line: usize,
+    errors: &mut Vec<CodingStyleError>,
+) -> bool {
     if let Some(name) = func(content) {
         errors.push(CodingStyleError { name, line });
+        return true;
     }
+    return false;
 }
 
 pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport {
@@ -38,7 +48,7 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
         }
     };
 
-    let mut line_count = 1;
+    let mut line_count = 0;
     let mut f4_checker = F4Checker::default();
 
     push_error_if(check_g1, &content, 1, &mut errors);
@@ -47,10 +57,12 @@ pub fn coding_style_report_from_file(file_path: String) -> FileCodingStyleReport
         if line.starts_with("/") || line.starts_with("**") {
             continue;
         }
-        check_all_f4(&mut f4_checker, line);
         for func in FUNCS {
-            push_error_if(func, line, line_count, &mut errors);
+            if push_error_if(func, line, line_count, &mut errors) {
+                break;
+            }
         }
+        check_all_f4(&mut f4_checker, line);
     }
     for f4 in f4_checker.all_f4 {
         errors.push(CodingStyleError {

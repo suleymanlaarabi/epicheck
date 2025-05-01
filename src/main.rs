@@ -2,7 +2,7 @@ use std::thread::{JoinHandle, spawn};
 
 use args::AppArgs;
 use check_allowed::check_libc_usage;
-use checker::print_file_error;
+use checker::{checker_ctx::is_line_var_decla, print_file_error};
 use clap::Parser;
 use collect_files::collect_c_files;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
@@ -15,11 +15,16 @@ mod checker;
 mod collect_files;
 mod parser;
 mod read_allowed;
-mod rules;
 
 fn main() {
     let args = AppArgs::parse();
     let mut threads: Vec<JoinHandle<()>> = Vec::new();
+
+    let content = "int i = 0;";
+
+    if is_line_var_decla(content) {
+        println!("ok");
+    }
 
     if let Some(binary) = args.binary {
         threads.push(spawn(move || {
